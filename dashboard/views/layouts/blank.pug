@@ -1,0 +1,13 @@
+extends layout
+
+block extra_stylesheets
+    link(href='assets/app/css/login.css' rel='stylesheet')
+
+block topmenu
+        .nav.fixed-top
+            .navbar-brand
+                include ../components/brand_header.pug
+block content_wrapper
+    .page_placeholder
+        .container
+            block content

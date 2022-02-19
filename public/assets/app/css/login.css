@@ -1,0 +1,174 @@
+/***********************************/
+/**          LOGIN PAGE          **/
+/**********************************/
+
+.login {
+    width: 100%;
+    height: 100%;
+}
+
+.login h4 {
+    font-size: 2.5rem;
+}
+
+.login .header {
+    margin-top: 10px;
+    margin-left: 10px;
+}
+
+.login .header sup {
+    font-size: 100%;
+    top: -0.2em !important;
+    color: red;
+}
+
+.login a {
+    text-decoration: none;
+    color: #fff;
+}
+
+/***********************************************/
+/**     LOGIN AND REGISTRATION WIDGET      **/
+/***********************************************/
+.login-widget {
+    max-width: 360px;
+    padding-bottom: 0;
+}
+
+@media only screen and (max-width:310px) {
+    .login-widget {
+        margin: 5px;
+    }
+}
+
+.registration-widget {
+    max-width: 500px;
+    padding-bottom: 0;
+}
+
+@media only screen and (max-width:610px) {
+    .registration-widget {
+        margin: 5px;
+    }
+}
+
+
+.login-widget header,
+.registration-widget header {
+    margin: 15px 0 25px 0;
+}
+
+.login-widget .form-control,
+.registration-widget .form-control {
+    font-size: 13px;
+}
+
+.login-widget .input-group-addon,
+.registration-widget .input-group-addon {
+    padding: 8px 7px;
+}
+
+.login-widget .error {
+    font-weight: 800;
+    color: rgb(255, 196, 0);
+}
+
+.login-widget .logo,
+.registration-widget .logo {
+    width: 150px !important;
+    margin: auto;
+    padding-bottom: 10px;
+}
+
+.login-widget .logo,
+.registration-widget .logo {
+    width: 150px !important;
+    margin: auto;
+    padding-bottom: 10px;
+}
+
+.login-widget .logo>img,
+.registration-widget .logo {
+    width: 100%;
+
+}
+
+.login-widget .input-group-addon i,
+.login-widget .input-group-addon i:before,
+.login-widget .input-group-addon i:after,
+.registration-widget .input-group-addon i,
+.registration-widget .input-group-addon i:before,
+.registration-widget .input-group-addon i:after {
+    width: 20px;
+    margin: 0;
+}
+
+.login-widget .form-actions,
+.registration-widget .form-actions {
+    font-size: 0.8rem;
+    padding: 15px;
+    color:#fff;
+    line-height: 1rem !important;
+
+}
+
+.login-widget .btn {
+    background-color: rgb(256, 71, 2);
+    border: none;
+    line-height: 1.0rem;
+    font-size: 0.8rem;
+    font-family: 'Open Sans';
+    font-weight: 600;
+    display: block
+}
+
+.login-widget .form-actions .small-circle,
+.registration-widget .form-actions .small-circle {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    border-radius: 50%;
+    background: rgba(0, 0, 0, 0.8);
+}
+
+.login-widget .form-actions .small-circle i,
+.registration-widget .form-actions .small-circle i {
+    position: relative;
+    left: 1px;
+}
+
+.login-widget .form-actions .forgot,
+.registration-widget .form-actions .forgot {
+    display: block;
+    color: #ccc;
+    line-height: 1.5rem;
+}
+
+.login-widget footer,
+.registration-widget footer {
+    border-radius: 10px;
+    height: auto !important;
+    overflow: hidden;
+    position: relative !important;
+    margin-bottom: 15px !important;
+    width: 100% !important;
+}
+
+.login-widget .social-login,
+.registration-widget .social-login {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    height: 30px;
+    text-align: center;
+    padding-top: 10px;
+}
+
+.login-widget .social-login a,
+.registration-widget .social-login a {
+    color: #ffffff;
+    display: block;
+    text-shadow: none;
+    text-decoration: none;
+}

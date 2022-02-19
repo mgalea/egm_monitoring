@@ -1,0 +1,291 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EARP Login - Random Systems Georgia</title>
+</head>
+
+<body>
+
+    <style>
+        body {
+            font-weight: 400;
+            background-color:#414e60;
+            color: #ddd;
+            background-image: url(./images/bg-pattern.svg),
+                radial-gradient(farthest-side ellipse at 10% 0, #414e60 20%, #94a3b1);
+            background-image: url(./images/bg-pattern.svg),
+                -webkit-radial-gradient(10% 0, farthest-side ellipse, #414e60 20%, #94a3b1);
+            background-image: url(./images/bg-pattern.svg),
+                -moz-radial-gradient(10% 0, farthest-side ellipse, #414e60 20%, #94a3b1);
+            background-size: cover;
+            background-attachment: fixed, fixed;
+            font-family: arial, sans-serif;
+            margin: 0px;
+        }
+
+        textarea {
+            padding: 10px;
+            resize: none;
+        }
+
+        .hidden {
+            display: none;
+            width: 100%;
+        }
+
+        input {
+            margin-top: 10px;
+            overflow: hidden;
+            width: 100%;
+            height: 30px;
+            border-radius: 5px;
+            background-color: #1b2a4698;
+            border: none;
+            color: rgb(252, 243, 114);
+            padding-left: 10px;
+        }
+
+        .thickborder {
+            background-color: #1b2a4698;
+            border-radius: 20px;
+        }
+
+        .center {
+            display: block;
+            margin: auto;
+            max-width: 300px;
+            text-align: center;
+
+        }
+
+        .pad-30 {
+
+            padding: 30px;
+        }
+
+        .right {
+            float: right;
+
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 20px;
+            margin-left: auto;
+            margin-right: auto;
+            max-width: 100px;
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            border-radius: 10px;
+            border: 0px;
+        }
+
+        .btn:hover {
+            filter: contrast(200%);
+            cursor: pointer;
+        }
+
+        .btn:focus {
+            filter: contrast(50%);
+            cursor: pointer;
+        }
+
+        .yellow {
+
+            background-color: #ffa600;
+        }
+
+        .green {
+
+            background-color: #3ab800;
+        }
+    </style>
+
+    <h2><img src="images/RS_AI.svg" width="150px" align="middle" style="margin: 10px; margin-top:0px">
+ Developers Resource Page</h2>
+    <div class="center thickborder pad-30">
+        <header>
+
+            <h3 class="center">Enhanced Automated Reporting Platform</h3>
+
+        </header>
+        <form id="loginform">
+            <h2>API Login</h2>
+            <p> Username:
+                <input type="text" name='username'></p>
+            <p> Password:
+                <input type="password" name='password'> </p>
+            <br>
+            <button type="submit" class="btn green right">Login</button>
+            <br>
+            <br>
+        </form>
+
+        <form id="loadfile" class="hidden">
+            <header>
+                <h1>Load Report</h1>
+            </header>
+            <p>Choose a report to upload: </p>
+            <input id='reportname' type="file" name='report'>
+            <br>
+            <button id='upload' type="submit" class="btn green ">Upload</button>
+        </form>
+
+        <textarea class="hidden" id="message" name="message" rows="4" cols="45" readonly></textarea>
+        </textarea>
+
+        <form id="checkfile" class="hidden">
+            <button id='check' type="submit" class="btn hidden green">File Status</button>
+        </form>
+
+        <form id="checkout" class="hidden">
+            <button type="submit" class="btn hidden yellow right">Log Out</button>
+        </form>
+
+        <form id="refresh" class="hidden">
+            <button type="submit" class="btn  green right">Refresh</button>
+        </form>
+
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+
+    <script type="text/javascript">
+        //There are three forms in this document. The first form is to login to the EARP system. 
+        //The second form is to upload a file and the third form is to check if the file has been processed.
+
+        //This function returns a JWT token that is required to interact with the EARP API
+
+        //your code here
+
+        function login(event) {
+            event.preventDefault(); // prevents the form from reloading the page
+            const form = event.currentTarget;
+
+            var details = {};
+            details.username = form.elements.item(0).value;
+            details.password = form.elements.item(1).value;
+
+            var formBody = [];
+            for (var property in details) {
+                var encodedKey = encodeURIComponent(property);
+                var encodedValue = encodeURIComponent(details[property]);
+                formBody.push(encodedKey + "=" + encodedValue);
+            }
+            formBody = formBody.join("&");
+
+            fetch('/api/auth/login', {
+                headers: {
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                    'Accept-Encoding' : 'gzip,deflate,br',
+                    'Connection' : 'keep-alive'
+                },
+                method: 'POST',
+                body: formBody
+            })
+            .then((res) => res.json())
+            .then(function (result) {
+                    console.log(result)
+                    if (result.auth === true) {
+                        localStorage.token = result.token;
+                        document.getElementById('loadfile').style.display = 'inline-block';
+                        document.getElementById('loginform').style.display = 'none ';
+                        document.getElementById('checkout').style.display = 'inline-block';
+                    } else {
+                        console.log(result.message);
+                        location.reload;
+                    }
+                });
+        }
+
+        function upload(event) {
+            event.preventDefault(); // prevents the form from reloading the page
+            const form = event.currentTarget;
+
+            if(document.getElementById("reportname").value){ 
+
+            fetch('/api/file/uploadfile', {
+                headers: {
+                    'x-access-token': localStorage.token
+                },
+                method: 'POST',
+                body: new FormData(form)
+
+            }).then((res) => res.json())
+                .then(function (result) {
+                    localStorage.report = result.filename;
+                    document.getElementById('message').innerText = ((result.received != 'OK') ? 'File has failed to upload. Improper file name format. ' : result.filename + ' has been received and its status is ') + result.status;
+                    document.getElementById('message').style.display = 'inline-block';
+                    document.getElementById('loadfile').style.display = 'none';
+                    document.getElementById('checkfile').style.display = ((result.received != 'OK') ? 'none' : 'inline-block');
+                    console.log(result);
+                });
+            } else{
+                    document.getElementById('message').innerText = 'Select a file with a valid filename.';
+                    document.getElementById('message').style.display = 'inline-block';
+                    document.getElementById('loadfile').style.display = 'none';
+
+            }
+        }
+
+        function checkFile(event) {
+            event.preventDefault(); // prevents the form from reloading the page
+            const form = event.currentTarget;
+
+            fetch('/api/file/' + localStorage.report, {
+                headers: {
+                    'x-access-token': localStorage.token
+                },
+                method: 'GET'
+
+            }).then((res) => res.json())
+                .then(function (result) {
+                    document.getElementById('message').innerText = JSON.stringify(result);
+                    document.getElementById('message').style.display = 'inline-block';
+                    console.log(result);
+                });
+
+        }
+
+        function checkOut(event) {
+            event.preventDefault(); // prevents the form from reloading the page
+            const form = event.currentTarget;
+
+            fetch('/api/auth/logout', {
+                headers: {
+                    'x-access-token': localStorage.token
+                },
+                method: 'GET'
+
+            }).then((res) => res.json())
+                .then(function (result) {
+                    document.getElementById('message').innerText = ((result.auth == false) ? ' Logout successful. Refresh page to relogin ' : ' failed to log out user. ');
+                    document.getElementById('checkout').style.display = 'none';
+                    document.getElementById('loadfile').style.display = 'none';
+                    document.getElementById('checkfile').style.display = 'none';
+                    document.getElementById('message').style.display = 'inline-block';
+                    document.getElementById('refresh').style.display = 'inline-block';
+                    console.log(result);
+                });
+        }
+
+        function refresh(event) {
+            const form = event.currentTarget;
+        }
+
+        document.getElementById('loginform').addEventListener('submit', login);
+        document.getElementById('checkout').addEventListener('submit', checkOut);
+        document.getElementById('loadfile').addEventListener('submit', upload);
+        document.getElementById('checkfile').addEventListener('submit', checkFile);
+        document.getElementById('refresh').addEventListener('submit', refresh);
+    </script>
+</body>
+
+
+
+
+</html>

@@ -1,0 +1,23 @@
+extends layout
+
+block extra_stylesheets
+    link(href='assets/app/css/login.css' rel='stylesheet')
+    link(href='assets/app/css/bootstrap-table-custom.css' rel='stylesheet')
+    script(src="https://cdnjs.cloudflare.com/ajax/libs/Sortable/1.13.0/Sortable.min.js"
+        integrity="sha512-5x7t0fTAVo9dpfbp3WtE2N6bfipUwk7siViWncdDoSz2KwOqVC1N9fDxEOzk0vTThOua/mglfF8NO7uVDLRC8Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer")
+    script(src="https://cdn.jsdelivr.net/npm/lodash@4.17.21/lodash.min.js")
+    script(src="assets/JSONeditor/jsoneditor.js")
+    script(src="assets/winbox/js/winbox.bundle.js")
+
+    link(rel="stylesheet" type="text/css" href="assets/JSONeditor/jsoneditor.css")
+    link(rel="stylesheet" href="assets/winbox/css/winbox.min.css" type="text/html")
+
+block topmenu
+    include ../components/navbar.pug
+
+block content_wrapper
+    .page_placeholder
+        .container-fluid
+            block content
+    include ../components/fixed_plugin

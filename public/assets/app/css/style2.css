@@ -1,0 +1,151 @@
+/* Color Theme Swatches in Hex */
+.analogous-1-hex {
+    color: #505563;
+}
+
+.analogous-2-hex {
+    color: #C4D0F4;
+}
+
+.analogous-3-hex {
+    color: #8D96B0;
+}
+
+.analogous-4-hex {
+    color: #5A5F70;
+}
+
+.analogous-5-hex {
+    color: #3B3F4A;
+}
+
+/* Color Theme Swatches in RGBA */
+.analogous-1-rgba {
+    color: rgba(80, 85, 99, 1);
+}
+
+.analogous-2-rgba {
+    color: rgba(196, 208, 244, 1);
+}
+
+.analogous-3-rgba {
+    color: rgba(141, 150, 176, 1);
+}
+
+.analogous-4-rgba {
+    color: rgba(90, 95, 112, 1);
+}
+
+.analogous-5-rgba {
+    color: rgba(59, 63, 74, 1);
+}
+
+html {
+    height: 100%;
+    font: 14px "Open Sans",
+        Helvetica,
+        Arial,
+        sans-serif;
+}
+
+body,
+#content,
+#menu {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+
+    font-size: 0.9em;
+}
+
+input[type=text],
+input[type=password],
+.form-select {
+    height: 2.5em;
+    border: 1px;
+    color: #C4D0F4;
+    background-color: radial-gradient(ellipse farthest-side at 10% 0, #1d2024 20%,  #414e60) !important;
+    padding: 5px;
+    border-radius: 3px;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+.page-title {
+    position: absolute;
+    bottom: 50%;
+    right: 50px;
+    text-decoration: none;
+    color: #3c548a;
+    overflow: hidden;
+    opacity: 0.6;
+    transform: rotate(-90deg);
+    transform-origin: top right;
+}
+
+.cxtmenu-disable {
+    opacity: 0.1;
+}
+
+.btn {
+    margin: 2px;
+    opacity: 0.6;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+.list-item {
+    border-radius: 5px;
+    height: 50px;
+    font-size: 1.2em;
+    padding: 10px;
+    margin-top: 4px;
+    width: 100%;
+    overflow: hidden;
+    color: white;
+    cursor: pointer;
+    cursor: -webkit-grabbing;
+    background-color: rgba(0, 0, 0, 0.4) !important;
+}
+
+.sortable-chosen {
+    background-color: rgba(180, 180, 255, 0.2) !important;
+}
+
+.list-item a :hover {
+    background-color: rgba(255, 255, 255, 0.2) !important;
+}
+
+.list-group,
+.container {
+    background-color: rgba(255, 255, 255, .05);
+
+}
+
+.list-group {
+    padding: 5px;
+    min-width: 200px;
+}
+
+.winbox.my-theme {
+    background: rgb(101, 109, 131);
+}
+
+.winbox.my-theme .wb-body {
+    color: #fff;
+    background: #181F2A;
+}
+
+.winbox.my-theme {
+    color: rgba(196, 208, 244, 1);
+}
+
+.winbox.my-theme .wb-icon {
+    filter: invert(1);
+}
+
+.winbox.my-theme .wb-icon:hover {
+    filter: #8D96B0;
+}

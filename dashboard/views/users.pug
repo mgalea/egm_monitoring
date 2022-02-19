@@ -1,0 +1,192 @@
+extends layouts/dashboard
+
+block content
+    #backstore(style="display: none")
+ 
+        #RegisterForm.widget.registration-widget.justify-content-around.bg-color
+            form#registration.no-margin(action='/register' method='POST')
+                header.text-align-center
+                    if errors
+                        ul.error
+                            each error in errors
+                                li=error.msg
+                .body
+                    fieldset
+                        .form-group
+                            label(for='username') Username
+                            .input-group
+                                span.input-group-addon
+                                    i.fa.fa-user
+                                input#username.form-control.input-lg.input-transparent(type='text' placeholder='Enter a Username' required='' name='username' value= (username !== 'undefined' ? username : ''))
+                            label(for='organization') Organisation
+                            .input-group
+                                span.input-group-addon
+                                    i.fa.fa-landmark
+                                input#org.form-control.input-lg.input-transparent(type='text' placeholder='Enter Organization' required='' name='org' value=org)
+                            label(for='orgID') Organisation ID
+                            .input-group
+                                span.input-group-addon
+                                    i.fa.fa-barcode
+                                input#orgID.form-control.input-lg.input-transparent(type='number' placeholder='Enter Organization identification' required='' name='org_id' value=org_id)
+                            label(for='name') Full Name of Contact Person
+                            .input-group
+                                span.input-group-addon
+                                    i.fa.fa-address-card
+                                input#username.form-control.input-lg.input-transparent(type='text' placeholder='Enter a Username' required='' name='name' value= (username !== 'undefined' ? username : ''))
+                            label(for='email') Email of Contact Person
+                            .input-group
+                                span.input-group-addon
+                                    i.fa.fa-envelope
+                                input#email.form-control.input-lg.input-transparent(type='text' placeholder='Enter Your Email' required='' name='email' value=email)
+                            label(for='password') Password
+                            .input-group
+                                span.input-group-addon
+                                    i.fa.fa-key
+                                input#password.form-control.input-lg.input-transparent(type='password' placeholder='Enter a password' required='' name='password' value=password)
+                            label(for='password2') Verify Password 
+                            .input-group
+                                span.input-group-addon
+                                    i.fa.fa-lock
+                                input#password2.form-control.input-lg.input-transparent(type='password' placeholder='Retype password' required='' name='password2' value=password2)
+                            if(user.role==='admin')
+                                label(for='role') User Role 
+                                    .input-group
+                                        span.input-group-addon
+                                            i.fa.fa-tag
+                                        select#role.form-control.input-lg.input-transparent(name="role" form="registration")
+                                            option(value='basic') basic
+                                            option(value='supervisor') supervisor
+                                            option(value='admin') admin
+                footer.form-actions
+                    .row
+                        .col-6.d-flex.justify-content-start
+                        .col-6.d-flex.justify-content-end
+                            button#RegisterBtn.btn.btn-success.btn-md.float-right(type='submit') Register
+        #UsersForm.widget.bg-color
+            .bootstrap-table-toolbar
+                button#newuser.btn.btn-primary.ms-auto(enabled)
+                    i.fa.fa-user
+                    span.btn-text  New User
+            header.text-align-center
+                if errors
+                    ul.error
+                        each error in errors
+                            li=error.msg
+            .body
+                table#user-table(
+                    data-toggle='table'
+                    data-url='users/list'
+                    data-show-toggle='true'
+                     )
+                    thead
+                        tr
+                            th(data-field='username', data-align='center', data-sortable='true') username
+                            th(data-field='name', data-align='left', data-sortable='true') name
+                            th(data-field='email', data-align='left', data-sortable='true') email
+                            th(data-field='role', data-sortable='true') role
+                            th(data-field='org_name', data-sortable='true') Organisation
+                            th(data-field='org_id', data-sortable='true') Org ID
+                            th(data-field='active', data-align='center', data-formatter="truefalseFormatter") Active?
+
+block extra-code
+    script(type="text/javascript").
+        var $table = $('#user-table')
+        var $userBtn = $('#newuser')
+
+        function truefalseFormatter(value, row, index) {
+            return [ (value==true)?'<i class="text-success fa fa-check"></i>':'<i class=".text-danger fa fa-close"></i>'
+            ].join('');
+        }
+
+        function operateFormatter(value, row, index) {
+            return [
+                '<a rel="tooltip" title="View" class="btn btn-link btn-info table-action view" href="javascript:void(0)">',
+                '<i class="fa fa-image"></i>',
+                '</a>',
+                '<a rel="tooltip" title="Edit" class="btn btn-link btn-warning table-action edit" href="javascript:void(0)">',
+                '<i class="fa fa-edit"></i>',
+                '</a>',
+                '<a rel="tooltip" title="Remove" class="btn btn-link btn-danger table-action remove" href="javascript:void(0)">',
+                '<i class="fa fa-remove"></i>',
+                '</a>'
+            ].join('');
+        }
+
+        $table.bootstrapTable({
+            toolbar: ".bootstrap-table-toolbar",
+            search: true,
+            clickToSelect: true,
+            showRefresh: true,
+            showToggle: true,
+            showColumns: true,
+            pagination: true,
+            export: true,
+            search:true,
+            searchAlign: 'left',
+            pageSize: 10,
+            clickToSelect: true,
+            pageList: [10, 25, 50, 100],
+                icons: {
+                refresh: 'fa-redo-alt',
+                search: 'fa-search',
+                columns: 'fa-columns',
+                detailOpen: 'fa fa-plus-circle',
+                detailClose: 'fa fa-minus-circle',
+                toggleOff: 'fa-toggle-off',
+                toggleOn: 'fa-toggle-on',
+            },
+                formatShowingRows: function(pageFrom, pageTo, totalRows) {
+                return "Showing from "+ pageFrom + " to " + pageTo + " users. Total " + totalRows + ' users.';
+            },
+            formatRecordsPerPage: function(pageNumber) {
+                return pageNumber + " rows visible";
+            },
+
+            classes: ['table','table-striped','table-dark']
+
+        });
+
+        //activate the tooltips after the data table is initialized
+
+        $(window).resize(function() {
+            $table.bootstrapTable('resetView');
+        });
+        $(document).ready(function () {
+
+            $userBtn.click(function () {
+
+                var el=document.getElementById('RegisterForm');
+
+
+                winBox = new WinBox('New User', {
+                            id:'new_user',
+                            root: document.body,
+                            top: '34px',
+                            bottom: '25px',
+                            border: "1px",
+                            x: 'center',
+                            y: 'center',
+                            height: `750px`,
+                            width: `500px`,
+                            mount: el
+                        });
+                var thisWindow=document.getElementById('new_user');
+                var thatWindow=document.getElementById('users_list');
+                console.log(thatWindow.style);
+                thisWindow.style['z-index']++;
+            });
+
+            var el=document.getElementById('UsersForm');
+            winBox = new WinBox('#{header}', {
+                        id:'users_list',
+                        root: document.body,
+                        top: '66px',
+                        bottom: '25px',
+                        border: "1px",
+                        x: 'center',
+                        y: 'center',
+                        height: `450px`,
+                        width: `80%`,
+                        mount: el
+                    });
+        });

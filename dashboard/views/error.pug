@@ -1,0 +1,8 @@
+extends layouts/blank
+
+block content
+    .page_placeholder
+        .container
+            h1= error.status + ': ' + message
+            pre #{error.stack}
+

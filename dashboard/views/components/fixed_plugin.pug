@@ -1,0 +1,15 @@
+block fixed_plugin
+    #settingsTab.fixed-plugin
+        .dropdown.show-dropdown
+            a(href="#" data-bs-toggle="dropdown" aria-expanded="false")
+                i.fa.fa-cog.fa-2x
+            ul.dropdown-menu(x-placement="bottom-start" style="position: relative; transform: transalte(230px, 40px); top: 0px; left: 0px; will-change: transform;")
+                li.header-title STYLE SETTINGS
+                li.adjustments-line
+                    p Background Image
+                        input(type="checkbox" checked data-on-color="info" name="myswitch" data-off-color="secondary")
+                    .clearfix
+                li.adjustments-line
+                    p Side Bar
+                        input(type="checkbox" checked data-on-color="info" name="myswitch" data-off-color="secondary" )
+                    .clearfix

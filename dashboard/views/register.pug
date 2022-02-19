@@ -1,0 +1,67 @@
+extends layouts/dashboard
+
+block content
+    .single-widget-container
+        form#registration.no-margin(action='/register' method='POST').widget.registration-widget.d-flex.row.justify-content-around
+            header.text-align-center
+                h6 Register as a new user
+                if errors
+                    ul.error
+                        each error in errors
+                            li=error.msg
+            .body
+                fieldset
+                    .form-group
+                        label(for='username') Username
+                        .input-group
+                            span.input-group-addon
+                                i.fa.fa-user
+                            input#username.form-control.input-lg.input-transparent(type='text' placeholder='Enter a Username' required='' name='username' value= (username !== 'undefined' ? username : ''))
+                        label(for='organization') Organisation
+                        .input-group
+                            span.input-group-addon
+                                i.fa.fa-landmark
+                            input#org.form-control.input-lg.input-transparent(type='text' placeholder='Enter Organization' required='' name='org' value=org)
+                        label(for='orgID') Organisation ID
+                        .input-group
+                            span.input-group-addon
+                                i.fa.fa-barcode
+                            input#orgID.form-control.input-lg.input-transparent(type='number' placeholder='Enter Organization identification' required='' name='org_id' value=org_id)
+                        label(for='name') Full Name of Contact Person
+                        .input-group
+                            span.input-group-addon
+                                i.fa.fa-address-card
+                            input#username.form-control.input-lg.input-transparent(type='text' placeholder='Enter Full name' required='' name='name' value= (name !== 'undefined' ? name : ''))
+                        label(for='email') Email of Contact Person
+                        .input-group
+                            span.input-group-addon
+                                i.fa.fa-envelope
+                            input#email.form-control.input-lg.input-transparent(type='text' placeholder='Enter a valid Email address' required='' name='email' value=email)
+                        label(for='password') Password
+                        .input-group
+                            span.input-group-addon
+                                i.fa.fa-key
+                            input#password.form-control.input-lg.input-transparent(type='password' placeholder='Enter a password' required='' name='password' value=password)
+                        label(for='password2') Verify Password 
+                        .input-group
+                            span.input-group-addon
+                                i.fa.fa-lock
+                            input#password2.form-control.input-lg.input-transparent(type='password' placeholder='Retype password' required='' name='password2' value=password2)
+                        if(user.role==='admin')
+                            label(for='role') User Role 
+                                .input-group
+                                    span.input-group-addon
+                                        i.fa.fa-tag
+                                    select#role.form-control.input-lg.input-transparent(name="role" form="registration")
+                                        option(value='basic') basic
+                                        option(value='supervisor') supervisor
+                                        option(value='admin') admin
+            footer.form-actions
+                .row
+                    .col-8.d-flex.justify-content-start
+                        if(!user)
+                            a.forgot.small(href='/login') Already have an account?
+                        else
+                            button.btn.btn-warning.btn-md.float-left(type='button' onclick='history.back();') Back 
+                    .col-4.d-flex.justify-content-end
+                        button.btn.btn-success.btn-md.float-right(type='submit') Register

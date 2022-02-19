@@ -1,0 +1,32 @@
+extends layouts/blank
+block content
+            .single-widget-container
+                form(action='/login' method='POST').widget.login-widget.d-flex.row.justify-content-around
+                    .logo
+                        img(src=brand_image)
+                    header.text-align-center
+                        if widgetHeader
+                            h6=widgetHeader
+                        if widgetSubheader
+                            h4.error=widgetSubheader
+                    .body
+                        fieldset
+                            .form-group
+                                label(for='username') Username
+                                .input-group
+                                    span.input-group-addon
+                                        i.fa.fa-user
+                                    input#username.form-control.input-lg.input-transparent(type='text' placeholder='Your Username' required='' name='username')
+                                label(for='password') Password
+                                .input-group
+                                    span.input-group-addon
+                                        i.fa.fa-lock
+                                    input#password.form-control.input-lg.input-transparent(type='password' placeholder='Your Password' required='' name='password')
+                    footer.form-actions
+                            .row
+                                .col-8
+                                    a.forgot.small(href='/password') Forgot Username or Password?
+
+                                .col-4.d-flex.justify-content-end
+                                    button.btn.btn-danger.btn-md.float-right(type='submit' ) Sign In
+            include components/fixed_plugin

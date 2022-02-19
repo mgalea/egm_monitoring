@@ -1,0 +1,36 @@
+extends layouts/dashboard
+
+block content
+    .single-widget-container
+        form#registration.no-margin(action='/devices/register' method='POST').widget.registration-widget.d-flex.row.justify-content-around
+            header.text-align-center
+                h6=header
+                if errors
+                    ul.error
+                        each error in errors
+                            li=error.msg
+            .body
+                fieldset
+                    .form-group
+                        label(for='device_id') Device ID
+                        .input-group
+                            span.input-group-addon
+                                i.fa.fa-cog
+                            input#device_id.form-control.input-lg.input-transparent(type='text' placeholder='Enter the device id as labelled on the side' required name='device_id' value= (deviceid !== 'undefined' ? device_id : ''))
+                        label(for='location_id') Location
+                        .input-group
+                            span.input-group-addon
+                                i.fa.fa-landmark
+                            input#location_id.form-control.input-lg.input-transparent(type='number' placeholder='Enter Location id' required name='location_id' value=location_id)
+                        label(for='install_date') Install Date
+                        .input-group
+                            span.input-group-addon
+                                i.fa.fa-barcode
+                            input#install_date.form-control.input-lg.input-transparent(type='date' placeholder='Enter date of Installation' required name='install_date' value=install_date)
+
+            footer.form-actions
+                .row
+                    .col-8.d-flex.justify-content-start
+                        button.btn.btn-warning.btn-md.float-left(type='button' onclick='history.back();') Back 
+                    .col-4.d-flex.justify-content-end
+                        button.btn.btn-success.btn-md.float-right(type='submit') Register

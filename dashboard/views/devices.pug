@@ -1,0 +1,160 @@
+extends layouts/dashboard
+
+block content
+    #backstore(style="display: none")
+ 
+        #RegisterForm.widget.registration-widget.justify-content-around.bg-color
+            form#registration.no-margin(action='/register' method='POST')
+                header.text-align-center
+                    if errors
+                        ul.error
+                            each error in errors
+                                li=error.msg
+                .body
+                    fieldset
+                        .form-group
+                            label(for='username') Username
+                            .input-group
+                                span.input-group-addon
+                                    i.fa.fa-user
+                                input#username.form-control.input-lg.input-transparent(type='text' placeholder='Enter a Username' required='' name='username' value= (username !== 'undefined' ? username : ''))
+                            label(for='organization') Organisation
+                            .input-group
+                                span.input-group-addon
+                                    i.fa.fa-landmark
+                                input#org.form-control.input-lg.input-transparent(type='text' placeholder='Enter Organization' required='' name='org' value=org)
+                            label(for='orgID') Organisation ID
+                            .input-group
+                                span.input-group-addon
+                                    i.fa.fa-barcode
+                                input#orgID.form-control.input-lg.input-transparent(type='number' placeholder='Enter Organization identification' required='' name='org_id' value=org_id)
+                            label(for='name') Full Name of Contact Person
+
+                footer.form-actions
+                    .row
+                        .col-6.d-flex.justify-content-start
+                        .col-6.d-flex.justify-content-end
+                            button#RegisterBtn.btn.btn-success.btn-md.float-right(type='submit') Register
+        #DevicesForm.widget.bg-color
+            header.text-align-center
+                if errors
+                    ul.error
+                        each error in errors
+                            li=error.msg
+            .body
+                table#device-table(
+                    data-toggle='table'
+                    data-url='devices/list'
+                    data-show-toggle='true'
+                     )
+                    thead
+                        tr
+                            th(data-field='device_id', data-align='center', data-sortable='true') Device ID
+                            th(data-field='location_id', data-align='left', data-sortable='true') Location ID
+                            th(data-field='install_date', data-sortable='true') Install Date
+                            th(data-field='active', data-align='center', data-formatter="truefalseFormatter") Current Status
+block extra-code
+    script(type="text/javascript").
+        var $table = $('#device-table')
+
+        function truefalseFormatter(value, row, index) {
+            return [ (value==true)?'<i class="text-success fa fa-check"></i>':'<i class=".text-danger fa fa-close"></i>'
+            ].join('');
+        }
+
+        function operateFormatter(value, row, index) {
+            return [
+                '<a rel="tooltip" title="View" class="btn btn-link btn-info table-action view" href="javascript:void(0)">',
+                '<i class="fa fa-image"></i>',
+                '</a>',
+                '<a rel="tooltip" title="Edit" class="btn btn-link btn-warning table-action edit" href="javascript:void(0)">',
+                '<i class="fa fa-edit"></i>',
+                '</a>',
+                '<a rel="tooltip" title="Remove" class="btn btn-link btn-danger table-action remove" href="javascript:void(0)">',
+                '<i class="fa fa-remove"></i>',
+                '</a>'
+            ].join('');
+        }
+
+        $table.bootstrapTable({
+            toolbar: ".bootstrap-table-toolbar",
+            search: true,
+            clickToSelect: true,
+            showRefresh: true,
+            showToggle: true,
+            showColumns: true,
+            pagination: true,
+            export: true,
+            search:true,
+            searchAlign: 'left',
+            pageSize: 10,
+            clickToSelect: true,
+            pageList: [10, 25, 50, 100],
+                icons: {
+                refresh: 'fa fa-redo-alt',
+                search: 'fa fa-search',
+                columns: 'fa fa-columns',
+                detailOpen: 'fa fa-plus-circle',
+                detailClose: 'fa fa-minus-circle',
+                toggleOff: 'fa fa-toggle-off',
+                toggleOn: 'fa fa-toggle-on',
+            },
+                formatShowingRows: function(pageFrom, pageTo, totalRows) {
+                return "Showing from "+ pageFrom + " to " + pageTo + " users. Total " + totalRows + ' users.';
+            },
+            formatRecordsPerPage: function(pageNumber) {
+                return pageNumber + " rows visible";
+            },
+
+            classes: ['table','table-striped','table-dark']
+
+        });
+
+        $(window).resize(function() {
+            $table.bootstrapTable('resetView');
+        });
+
+
+        $table.on('click-cell.bs.table', function (field, value, row, $el) {
+            if (value !="type"){
+                alert($el.device_id+"-"+$el.location_id);
+            }
+        });
+
+        $(document).ready(function () {
+
+            $('#RegisterForm').on('click', '#newDevice', function () { 
+                console.log('Button Pressed');
+
+                var el=document.getElementById('RegisterForm');
+
+                winBox = new WinBox('New Device', {
+                            id:'new_device',
+                            root: document.body,
+                            top: '34px',
+                            bottom: '25px',
+                            border: "1px",
+                            x: 'center',
+                            y: 'center',
+                            height: `750px`,
+                            width: `500px`,
+                            mount: el
+                        });
+                var thisWindow=document.getElementById('new_device');
+                var thatWindow=document.getElementById('devices_list');
+                thisWindow.style['z-index']++;
+            });
+
+            var el=document.getElementById('DevicesForm');
+            winBox = new WinBox('#{header}', {
+                        id:'devices_list',
+                        root: document.body,
+                        top: '10px',
+                        border: "1px",
+                        x: 'center',
+                        y: 'center',
+                        height: `400px`,
+                        width: `50%`,
+                        mount: el
+                    });
+        });

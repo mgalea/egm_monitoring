@@ -1,0 +1,139 @@
+/***********************************/
+/**          BOOTSTRAP_TABLE      **/
+/**********************************/
+.bootstrap-table {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    color: #f8f8f8 !important;
+    background: rgba(51, 51, 51, 0.5);
+    margin-bottom: 30px;
+    position: relative;
+    font-size: 0.95rem;
+    padding: 4px;
+    border: none;
+    line-height: 1.5rem;
+
+}
+
+.fixed-table-toolbar {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.bootstrap-table thead {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    color: #ffae00;
+    background: rgba(0, 0, 0, .5);
+    margin-bottom: 30px;
+    position: relative;
+    font-size: 0.9rem;
+    border-color: rgba(51, 51, 51, 0.8) !important;
+    line-height: 1.5rem;
+}
+
+.bootstrap-table .fixed-table-container .table thead th .th-inner {
+    padding: .25rem;
+}
+
+.bootstrap-table a {
+    -webkit-box-sizing: content-box;
+    -moz-box-sizing: content-box;
+    box-sizing: content-box;
+    color: #ffae00;
+    margin-bottom: 20px;
+    position: relative;
+    font-size: 0.9rem;
+}
+
+.fixed-table-pagination .dropdown-menu {
+    min-width: 4rem;
+    text-align: right;
+    line-height: 1rem;
+}
+a.dropdown-item.active {
+    -webkit-box-sizing: border-box !important;
+    -moz-box-sizing: border-box !important;
+    box-sizing: border-box !important;
+    width: auto;
+}
+
+
+.fixed-table-container .table .card-view .card-view-value {
+    margin-left: auto !important;
+    width: auto !important;
+}
+
+@media only screen and (max-width:480px) {
+    .bootstrap-table-toolbar .btn-text {
+        display: none;
+    }
+
+    .bootstrap-table-toolbar .btn {
+        padding-left: 0.6rem;
+        padding-right: 0.6rem;
+    }
+
+    .fixed-table-toolbar {
+        margin: 0px !important;
+    }
+
+    .btn {
+        padding-left: .35rem;
+        padding-right: .35rem
+    }
+
+    .fixed-table-toolbar .btn:first-child {
+        margin-left: 0px;
+    }
+}
+
+
+.bootstrap-table td,
+.bootstrap-table thead {
+    padding: 6px !important;
+    border-bottom: solid 1px rgba(51, 51, 51, 0.8);
+}
+
+.bootstrap-table tr {
+    border-top: solid 1px rgba(51, 51, 51, 0.8);
+
+}
+
+.bootstrap-table tr:last-child {
+    border-bottom: solid 2px rgba(51, 51, 51, 0.8);
+    border-top: none;
+}
+
+.bootstrap-table .page-link {
+    background-color: rgba(51, 51, 51, 0.5);
+    border: none !important;
+}
+
+.bootstrap-table .pagination-info {
+    line-height: 34px;
+    margin-left: 20px;
+    color: #ff8800;
+    font-size: smaller;
+}
+
+.bootstrap-table .fixed-table-toolbar .bs-bars,
+.bootstrap-table .fixed-table-toolbar .columns,
+.bootstrap-table .fixed-table-toolbar .search {
+    margin: 10px;
+}
+
+.table-striped tbody tr:nth-of-type(2n+1) {
+    background-color: rgba(0, 0, 0, .1);
+}
+
+.table th {
+    border-bottom: 1px solid #ff8800;
+}
+
+.bootstrap-table .fixed-table-pagination>.pagination-detail .page-list {
+    font-size: smaller;
+}

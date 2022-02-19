@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+
+<head>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"
+        integrity="sha256-kXTEJcRFN330VirZFl6gj9+UM6gIKW195fYZeR3xDhc=" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div id="app">
+        <todo-item v-for="item in groceryList" v-bind:todo="item" v-bind:key="item.id"></todo-item>
+        <span v-bind:title="message">
+            <h2> {{product}} are in stock: {{qty}}</h2><button v-on:click="addItem">Add</button>
+        </span>
+        <input v-model="product">
+        <span v-if="qty>10">Out of Stock</span>
+
+    </div>
+</body>
+<script>
+    Vue.component('todo-item', {
+        props: ['todo'],
+        template: '<li>This is a todo Component with {{ todo.text }}</li>',
+
+    })
+
+    const app = new Vue({
+        el: '#app',
+        data: {
+            product: 'cars',
+            message: 'we are here ' + new Date().toLocaleString(),
+            seen: false,
+            qty: 10,
+            groceryList: [
+                { id: 0, text: 'Vegetables' },
+                { id: 1, text: 'Cheese' },
+                { id: 2, text: 'Humans are supposed to eat' }
+            ]
+        },
+        methods: {
+            addItem: function () {
+                this.qty = this.qty + 1;
+            }
+        }
+    })
+
+</script>
+
+</html>

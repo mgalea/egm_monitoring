@@ -1,0 +1,16 @@
+doctype html
+html(lang='en')
+    include header.pug
+
+    body.d-flex.flex-column.min-vh-100
+        block topmenu
+        block content_wrapper
+            block leftmenu
+            block content
+            block rightmenu
+        block footer
+    include footer.pug
+    include javascripts_loader.pug
+        block extra-code
+
+// Extra Code

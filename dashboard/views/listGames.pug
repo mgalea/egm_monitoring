@@ -1,0 +1,105 @@
+extends layouts/dashboard
+
+block content
+    #backstore(style="display: none")
+
+        #DevicesForm.widget.bg-color
+            header.text-align-center
+                if errors
+                    ul.error
+                        each error in errors
+                            li=error.msg
+            .body
+                table#games-table(
+                    data-toggle='table'
+                    data-url='devices/list'
+                    data-show-toggle='true'
+                     )
+                    thead
+                        tr
+                            th(data-field='device_id', data-align='center', data-sortable='true') Device ID
+                            th(data-field='location_id', data-align='left', data-sortable='true') Game Number
+                            th(data-field='install_date', data-sortable='true') Game Name
+block extra-code
+    script(type="text/javascript").
+        var $table = $('#games-table')
+
+        function truefalseFormatter(value, row, index) {
+            return [ (value==true)?'<i class="text-success fa fa-check"></i>':'<i class=".text-danger fa fa-close"></i>'
+            ].join('');
+        }
+
+        function operateFormatter(value, row, index) {
+            return [
+                '<a rel="tooltip" title="View" class="btn btn-link btn-info table-action view" href="javascript:void(0)">',
+                '<i class="fa fa-image"></i>',
+                '</a>',
+                '<a rel="tooltip" title="Edit" class="btn btn-link btn-warning table-action edit" href="javascript:void(0)">',
+                '<i class="fa fa-edit"></i>',
+                '</a>',
+                '<a rel="tooltip" title="Remove" class="btn btn-link btn-danger table-action remove" href="javascript:void(0)">',
+                '<i class="fa fa-remove"></i>',
+                '</a>'
+            ].join('');
+        }
+
+        $table.bootstrapTable({
+            toolbar: ".bootstrap-table-toolbar",
+            search: true,
+            clickToSelect: true,
+            showRefresh: true,
+            showToggle: true,
+            showColumns: true,
+            pagination: true,
+            export: true,
+            search:true,
+            searchAlign: 'left',
+            pageSize: 10,
+            clickToSelect: true,
+            pageList: [10, 25, 50, 100],
+                icons: {
+                refresh: 'fa fa-redo-alt',
+                search: 'fa fa-search',
+                columns: 'fa fa-columns',
+                detailOpen: 'fa fa-plus-circle',
+                detailClose: 'fa fa-minus-circle',
+                toggleOff: 'fa fa-toggle-off',
+                toggleOn: 'fa fa-toggle-on',
+            },
+                formatShowingRows: function(pageFrom, pageTo, totalRows) {
+                return "Showing from "+ pageFrom + " to " + pageTo + " users. Total " + totalRows + ' users.';
+            },
+            formatRecordsPerPage: function(pageNumber) {
+                return pageNumber + " rows visible";
+            },
+
+            classes: ['table','table-striped','table-dark']
+
+        });
+
+        $(window).resize(function() {
+            $table.bootstrapTable('resetView');
+        });
+
+
+        $table.on('click-cell.bs.table', function (field, value, row, $el) {
+            if (value !="type"){
+                alert($el.device_id+"-"+$el.location_id);
+            }
+        });
+
+        $(document).ready(function () {
+
+            var el=document.getElementById('DevicesForm');
+            winBox = new WinBox('#{header}', {
+                        id:'devices_list',
+                        root: document.body,
+                        top: '10px',
+                        border: "1px",
+                        x: 'center',
+                        y: 'center',
+                        height: `80%`,
+                        width: `50%`,
+                        mount: el
+                    });
+        });
