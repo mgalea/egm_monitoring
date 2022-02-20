@@ -8,5 +8,13 @@ use('mqtt');
 
 
 // Run a find command to view items sold on April 4th, 2014.
-db.games.find({ 'device.timestamp': {$gte: 1645292532, $lte:1645292540} }, { data: 1, device: 1 });
+//db.meters.find({ 'data.game_number': '0000' }, { data: 1, device: 1 }).limit(3);
 
+period=(((Date.now()/1000)-(3600*34.3)) );
+
+game_numbers=db.meters.distinct("data.game_number",{"device.id":'A000'});
+
+db.meters.aggregate([
+  { $match: {"device.timestamp": { $lt: period } } },
+  { $match: {"data.game_number": {$in:game_numbers} } }
+]);

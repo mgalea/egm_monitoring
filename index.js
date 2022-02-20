@@ -14,7 +14,6 @@ const Os = require('os');
 const FS = require('fs');
 const _ = require('lodash');
 
-
 /** 
  * @global 
  * @description absolute Path for the root directory for this app
